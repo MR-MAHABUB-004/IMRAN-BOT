@@ -5,7 +5,7 @@
  * @bug fixed by @YanMaglinte
  */
 module.exports = function ({ api, models, Users, Threads, Currencies }) {
-    const logger = require("../../catalogs/IMRANC.js");
+    const logger = require("../../catalogs/MAHABUBC.js");
     return async function ({ event }) {
         const { threadID, logMessageType, logMessageData } = event;
         const { setData, getData, delData, createData } = Threads;
