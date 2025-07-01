@@ -13,7 +13,7 @@ const packages = JSON.parse(readFileSync('../../package.json'));
 const fs = require("fs");
 const login = require('../system/ws3-fca/index.js');
 const moment = require("moment-timezone");
-const logger = require("./IMRANC.js");
+const logger = require("./MAHABUBC.js");
 const gradient = require("gradient-string");
 const process = require("process");
 const listbuiltinModules = require("module").builtinModules;
@@ -72,8 +72,8 @@ global.data = new Object({
   allCurrenciesID: new Array(),
   allThreadID: new Array(),
 });
-global.utils = require("./IMRAND.js");
-global.loading = require("./IMRANC.js");
+global.utils = require("./MAHABUBD.js");
+global.loading = require("./MAHABUBC.js");
 global.send = require('../system/notification/mail.js');
 
 global.nodemodule = new Object();
@@ -88,7 +88,7 @@ global.language = new Object();
 global.account = new Object();
 
 const cheerful = gradient.fruit
-const crayon = gradient('yellow', 'lime', 'green');
+const crayon = gradient('blue', 'lime', 'green');
 const sky = gradient('#3446eb', '#3455eb', '#3474eb');
 const BLUE = ('#3467eb');
 const errorMessages = [];
@@ -127,15 +127,15 @@ var configValue;
 try {
   global.client.configPath = join(global.client.mainPath, "../../Config.json");
   configValue = require(global.client.configPath);
-  logger.loader(`deploying ${chalk.blueBright('IMRAN')} file`);
+  logger.loader(`deploying ${chalk.blueBright('MR᭄﹅ MAHABUB﹅ メꪜ')} file`);
 } catch (e) {
-  return logger.loader(`cant read ${chalk.blueBright('IMRAN')} file`, "error");
+  return logger.loader(`cant read ${chalk.blueBright('MR᭄﹅ MAHABUB﹅ メꪜ')} file`, "error");
 }
 try {
   for (const key in configValue) global.config[key] = configValue[key];
-  logger.loader(`deployed ${chalk.blueBright('IMRAN')} file`);
+  logger.loader(`deployed ${chalk.blueBright('MR᭄﹅ MAHABUB﹅ メꪜ')} file`);
 } catch (e) {
-  return logger.loader(`can't deploy ${chalk.blueBright('IMRAN')} file`, "error")
+  return logger.loader(`can't deploy ${chalk.blueBright('MR᭄﹅ MAHABUB﹅ メꪜ')} file`, "error")
 }
 
 var approvedListsValue;
@@ -231,20 +231,20 @@ try {
     logger.error(`please enter your bot prefix in ${chalk.blueBright('Config.json')} file`)
     process.exit(0);
   }
-  if (global.config.author != "IMRAN") {
+  if (global.config.author != "MR᭄﹅ MAHABUB﹅ メꪜ") {
     logger.error(`detected : author was changed at ${chalk.blueBright('Config.json')}`);
     process.exit(0);
   }
 
-  if (global.config.OWNER != "100075122837809") {
+  if (global.config.OWNER != "100014754734049") {
     logger.error(`detected : owner uid was changed at ${chalk.blueBright('Config.json')}`);
     process.exit(0);
   }
-  if (packages.author != "IMRAN") {
+  if (packages.author != "MR᭄﹅ MAHABUB﹅ メꪜ") {
     logger.error(`detected : author was changed at ${chalk.blueBright('package.json')}`);
     process.exit(0);
   }
-  if (packages.name != "IMRAN") {
+  if (packages.name != "MR᭄﹅ MAHABUB﹅ メꪜ") {
     logger.error(`detected : project name was changed at ${chalk.blueBright('package.json')}`);
     process.exit(0);
   }
@@ -445,7 +445,7 @@ function onBot({ models: botModel }) {
     listenerData.api = api;
     listenerData.models = botModel;
     const listener = require('../system/listen.js')(listenerData);
-    global.custom = require('../../IMRAN.js')({ api: api });
+    global.custom = require('../../MAHABUB.js')({ api: api });
       // Set listenMqtt
       global.handleListen = api.listenMqtt(async (error, message) => {
           if (error) {
@@ -467,9 +467,9 @@ function onBot({ models: botModel }) {
     authentication.Sequelize = Sequelize;
     authentication.sequelize = sequelize;
     const models = require('../system/database/model.js')(authentication);
-    logger(`deployed ${chalk.blueBright('database')} system`, "IMRAN");
+    logger(`deployed ${chalk.blueBright('database')} system`, "MR᭄﹅ MAHABUB﹅ メꪜ");
     const botData = {};
     botData.models = models;
     onBot(botData);
-  } catch (error) { logger(`can't deploy ${chalk.blueBright('database')} system`, "IMRAN") }
+  } catch (error) { logger(`can't deploy ${chalk.blueBright('database')} system`, "MR᭄﹅ MAHABUB﹅ メꪜ") }
 })();
