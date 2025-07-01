@@ -1,9 +1,9 @@
 module.exports = async ({ api, event }) => {
-  const logger = require('./main/catalogs/IMRANC.js')
+  const logger = require('./main/catalogs/MAHABUBC.js')
   
   const configCustom = {
     autosetbio: {
-      status: false,
+      status: true,
       bio: `prefix : ${global.config.PREFIX}`,
       note: 'automatically change the bot bio.'
     },
