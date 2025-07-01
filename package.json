@@ -1,12 +1,12 @@
 {
-  "name": "IMRAN",
+  "name": "MR᭄﹅ MAHABUB﹅ メꪜ",
   "version": "1.0.5",
   "description": "simple facebook messenger bot",
   "main": "main/catalogs/IMRANA.js",
   "scripts": {
     "start": "node main/catalogs/IMRANA.js"
   },
-  "author": "IMRAN",
+  "author": "MR᭄﹅ MAHABUB﹅ メꪜ",
   "license": "ISC",
   "dependencies": {
     "abir-photo360-apis": "^1.0.2",
