@@ -4,7 +4,7 @@
 
 let request = require("request").defaults({ jar: true });
 const stream = require("stream");
-const logger = require('../../catalogs/IMRANC.js');
+const logger = require('../../catalogs/MAHABUBC.js');
 const querystring = require("querystring");
 const url = require("url");
 
