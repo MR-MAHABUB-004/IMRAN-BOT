@@ -19,9 +19,9 @@ module.exports.run = async function({ api, event, Threads }) {
 
 	// ➤ Bot Join Welcome
 	if (event.logMessageData.addedParticipants.some(i => i.userFbId == api.getCurrentUserID())) {
-		const botName = global.config.BOTNAME || "IMRAN";
+		const botName = global.config.BOTNAME || "𝐌𝐀𝐇𝐀𝐁𝐔𝐁 𝐁𝐎𝐓";
 		const prefix = global.config.PREFIX;
-		const BOT_GIF_URL = 'https://raw.githubusercontent.com/MR-IMRAN-60/JSON-STORE/refs/heads/main/imbot.gif';
+		const BOT_GIF_URL = 'https://raw.githubusercontent.com/MR-MAHABUB-004/MAHABUB-BOT-STORAGE/refs/heads/main/andarxrr.gif';
 
 		await api.changeNickname(`${botName} ai`, threadID, api.getCurrentUserID());
 
@@ -50,7 +50,7 @@ module.exports.run = async function({ api, event, Threads }) {
 
 ╔╦══•  •✠•❀•✠•  •══╦╗
 ♥ 𝐁𝐎𝐓'𝐬 𝐎𝐖𝐍𝐄𝐑 ♥
-				♕ 𝐈𝐦𝐫𝐚𝐧 𝐀𝐡𝐦𝐞𝐝 ♕
+				♕ 𝐌𝐚𝐡𝐚𝐛𝐮𝐛 𝐑𝐚𝐡𝐦𝐚𝐧 ♕
 ╚╩══•  •✠•❀•✠•  •══╩╝
 		`;
 
@@ -102,7 +102,7 @@ module.exports.run = async function({ api, event, Threads }) {
 
 ╔╦══•  •✠•❀•✠•  •══╦╗
 ♥  𝐁𝐎𝐓'𝐬 𝐎𝐖𝐍𝐄𝐑 ♥
-				♥ 𝐈𝐦𝐫𝐚𝐧 𝐀𝐡𝐦𝐞𝐝 ♥
+				♥ 𝐌𝐚𝐡𝐚𝐛𝐮𝐛 𝐑𝐚𝐡𝐦𝐚𝐧 ♥
 ╚╩══•  •✠•❀•✠•  •══╩╝`;
 
 			msg = msg
