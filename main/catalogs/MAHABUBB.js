@@ -1,5 +1,4 @@
 
-Save New Duplicate & Edit Just Text Twitter
 require("../../update.js"); //fix by IMRAN
 
 const { readdirSync, readFileSync, writeFileSync } = require("fs-extra");
