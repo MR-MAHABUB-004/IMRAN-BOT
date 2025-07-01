@@ -9,7 +9,7 @@
         "autoMarkDelivery": false,
         "autoMarkRead": false,
         "autoReconnect": true,
-        "online": false,
+        "online": true,
         "emitReady": false,
         "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14.7; rv:132.0) Gecko/20100101 Firefox/132.0"
     },
