@@ -2,9 +2,9 @@
   "name": "MR᭄﹅ MAHABUB﹅ メꪜ",
   "version": "1.0.5",
   "description": "simple facebook messenger bot",
-  "main": "main/catalogs/IMRANA.js",
+  "main": "main/catalogs/MAHABUBA.js",
   "scripts": {
-    "start": "node main/catalogs/IMRANA.js"
+    "start": "node main/catalogs/MAHABUBA.js"
   },
   "author": "MR᭄﹅ MAHABUB﹅ メꪜ",
   "license": "ISC",
