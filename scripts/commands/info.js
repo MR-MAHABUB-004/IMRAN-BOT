@@ -21,11 +21,11 @@ module.exports.config = {
 
 module.exports.run = async ({ api, event, args }) => {
   const adminInfo = {
-    name: "Imran Ahmed",
-    city: "Dhaka, Bangladesh",
-    work: "Web Developer & Bot Creator",
-    whatsapp: "wa.me/+8801689903267",
-    facebook: "https://facebook.com/Imran.Ahmed099"
+    name: "𝗠𝗮𝗵𝗮𝗯𝘂𝗯 𝗥𝗮𝗵𝗺𝗮𝗻",
+    city: "𝗗𝗵𝗮𝗸𝗮, 𝗕𝗮𝗻𝗴𝗹𝗮𝗱𝗲𝘀𝗵",
+    work: "𝗪𝗲𝗯 𝗗𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗿 & 𝗕𝗼𝘁 𝗖𝗿𝗲𝗮𝘁𝗼𝗿",
+    whatsapp: "wa.me/+8801613356376",
+    facebook: "https://facebook.com/www.xnxx.com140"
   };
 
   const botVersion = global.config.version || "2.0.0";
@@ -33,7 +33,7 @@ module.exports.run = async ({ api, event, args }) => {
   const uptime = formatUptime(uptimeSeconds);
 
   const info = `
-✦ 𝗬𝗨𝗠𝗜𝗞𝗔 𝗕𝗢𝗧 𝗔𝗗𝗠𝗜𝗡 𝗜𝗡𝗙𝗢 ✦
+✦ 𝗠𝗔𝗛𝗔𝗕𝗨𝗕 𝗕𝗢𝗧 𝗔𝗗𝗠𝗜𝗡 𝗜𝗡𝗙𝗢 ✦
 
 ❖ 𝗡𝗮𝗺𝗲: 『 ${adminInfo.name} 』
 ❖ 𝗟𝗼𝗰𝗮𝘁𝗶𝗼𝗻: 『 ${adminInfo.city} 』
@@ -52,7 +52,7 @@ module.exports.run = async ({ api, event, args }) => {
 `.trim();
 
   const imagePath = __dirname + "/cache/admin.png";
-  const imageURL = `https://graph.facebook.com/100075122837809/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
+  const imageURL = `https://graph.facebook.com/100014754734049/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
 
   request(encodeURI(imageURL))
     .pipe(fs.createWriteStream(imagePath))
