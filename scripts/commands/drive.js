@@ -17,7 +17,7 @@ module.exports.run = async ({ api, event }) => {
   const replied = event.messageReply;
 
   if (!replied || !replied.attachments || replied.attachments.length === 0) {
-    return api.sendMessage("❌ Please reply to a Google Drive video/image or media.", event.threadID);
+    return api.sendMessage("❌ Please reply to a Google Drive video/image or media.", event.threadID, event.messageID);
   }
 
   const fileUrl = replied.attachments[0].url;
