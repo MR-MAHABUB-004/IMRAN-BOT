@@ -3,7 +3,7 @@ const fs = require("fs-extra");
 const path = require("path");
 const chalk = require("chalk");
 
-const updaterConfigUrl = "https://raw.githubusercontent.com/ABIR-ISLAM099/BooT/master/updater.json"; // এখানে তোমার updater.json GitHub লিংক দিবে
+const updaterConfigUrl = "https://raw.githubusercontent.com/MR-MAHABUB-004/IMRAN-BOTV4/main/updater.json"; // এখানে তোমার updater.json GitHub লিংক দিবে
 const versionPath = path.resolve(__dirname, "package.json");
 
 (async () => {
@@ -23,7 +23,7 @@ const versionPath = path.resolve(__dirname, "package.json");
         // Update Files
         for (const file of updateConfig.files) {
             const localPath = path.resolve(__dirname, file);
-            const remoteFileUrl = `https://raw.githubusercontent.com/ABIR-ISLAM099/BooT/master/${file}`;
+            const remoteFileUrl = `https://raw.githubusercontent.com//MR-MAHABUB-004/IMRAN-BOTV4/main/${file}`;
 
             try {
                 const { data: fileData } = await axios.get(remoteFileUrl);
