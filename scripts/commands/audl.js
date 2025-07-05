@@ -1,12 +1,13 @@
 const axios = require("axios");
 const fs = require("fs-extra");
+const path = require("path");
 
 module.exports.config = {
   name: "auto",
   version: "0.0.3",
   permission: 0,
   credits: "Nayan & Mahabub Edit",
-  description: "Auto video downloader using dynamic API",
+  description: "Auto video downloader using dynamic API with HD/SD fallback",
   prefix: true,
   premium: false,
   category: "User",
@@ -30,31 +31,46 @@ module.exports.handleEvent = async ({ api, event }) => {
 
     // ✅ Step 2: Request to actual download API
     const response = await axios.get(`${baseAPI}${encodeURIComponent(content)}`);
-    const { downloadurlX, title } = response.data;
+    const { hd, sd, title } = response.data;
 
-    if (!downloadurlX) {
+    if (!hd && !sd) {
       api.setMessageReaction("❌", event.messageID, () => {}, true);
-      return api.sendMessage("❌ Unable to get download link.", event.threadID, event.messageID);
+      return api.sendMessage("❌ No valid video links (HD or SD) found.", event.threadID, event.messageID);
     }
 
-    // ✅ Step 3: Download the video file
-    const video = (await axios.get(downloadurlX, {
-      responseType: "arraybuffer"
-    })).data;
+    // ✅ Step 3: Download the video file (HD first, fallback to SD)
+    await fs.ensureDir(path.join(__dirname, "cache"));
+    let videoBuffer, qualityUsed = "HD";
 
-    const filePath = __dirname + "/cache/auto.mp4";
-    fs.writeFileSync(filePath, Buffer.from(video, "binary"));
+    try {
+      videoBuffer = (await axios.get(hd, { responseType: "arraybuffer" })).data;
+    } catch (hdError) {
+      console.warn("⚠️ HD download failed. Trying SD...");
+      qualityUsed = "SD";
+      try {
+        videoBuffer = (await axios.get(sd, { responseType: "arraybuffer" })).data;
+      } catch (sdError) {
+        api.setMessageReaction("❌", event.messageID, () => {}, true);
+        return api.sendMessage("❌ Both HD and SD video downloads failed.", event.threadID, event.messageID);
+      }
+    }
+
+    const filePath = path.join(__dirname, "cache", "auto.mp4");
+    fs.writeFileSync(filePath, Buffer.from(videoBuffer, "binary"));
 
     api.setMessageReaction("✔️", event.messageID, () => {}, true);
 
-    // ✅ Step 4: Send video with title
+    // ✅ Step 4: Send video with title + quality info
     api.sendMessage({
-      body: `《TITLE》: ${title || "No Title Found"}`,
+      body: `《TITLE》: ${title || "No Title Found"}\n📥 Quality: ${qualityUsed}`,
       attachment: fs.createReadStream(filePath)
-    }, event.threadID, event.messageID);
+    }, event.threadID, () => {
+      fs.unlink(filePath, () => {});
+    }, event.messageID);
 
   } catch (error) {
     console.error("Download error:", error.response?.data || error.message);
+    console.error("Error stack:", error.stack);
     api.setMessageReaction("❌", event.messageID, () => {}, true);
     api.sendMessage("❌ Failed to download the video. Please check the link or try again later.", event.threadID, event.messageID);
   }
