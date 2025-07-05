@@ -4,10 +4,10 @@ const path = require("path");
 
 module.exports.config = {
   name: "auto",
-  version: "0.0.3",
+  version: "0.0.4",
   permission: 0,
   credits: "Nayan & Mahabub Edit",
-  description: "Auto video downloader using dynamic API with HD/SD fallback",
+  description: "Auto video downloader using dynamic API with HD/SD fallback and CDN view link",
   prefix: true,
   premium: false,
   category: "User",
@@ -31,7 +31,7 @@ module.exports.handleEvent = async ({ api, event }) => {
 
     // ✅ Step 2: Request to actual download API
     const response = await axios.get(`${baseAPI}${encodeURIComponent(content)}`);
-    const { hd, sd, title } = response.data;
+    const { hd, sd, title, platform } = response.data;
 
     if (!hd && !sd) {
       api.setMessageReaction("❌", event.messageID, () => {}, true);
@@ -43,13 +43,26 @@ module.exports.handleEvent = async ({ api, event }) => {
     let videoBuffer, qualityUsed = "HD";
 
     try {
-      videoBuffer = (await axios.get(hd, { responseType: "arraybuffer" })).data;
+      videoBuffer = (await axios.get(hd, {
+        responseType: "arraybuffer",
+        timeout: 15000,
+        headers: {
+          'User-Agent': 'Mozilla/5.0'
+        }
+      })).data;
     } catch (hdError) {
-      console.warn("⚠️ HD download failed. Trying SD...");
+      console.warn("⚠️ HD download failed:", hdError.message);
       qualityUsed = "SD";
       try {
-        videoBuffer = (await axios.get(sd, { responseType: "arraybuffer" })).data;
+        videoBuffer = (await axios.get(sd, {
+          responseType: "arraybuffer",
+          timeout: 15000,
+          headers: {
+            'User-Agent': 'Mozilla/5.0'
+          }
+        })).data;
       } catch (sdError) {
+        console.error("❌ Both downloads failed:", sdError.message);
         api.setMessageReaction("❌", event.messageID, () => {}, true);
         return api.sendMessage("❌ Both HD and SD video downloads failed.", event.threadID, event.messageID);
       }
@@ -60,9 +73,14 @@ module.exports.handleEvent = async ({ api, event }) => {
 
     api.setMessageReaction("✔️", event.messageID, () => {}, true);
 
-    // ✅ Step 4: Send video with title + quality info
+    // ✅ Step 4: Decide view type and generate preview/download link
+    const isForcedDownload = /capcut|youtube/i.test(platform || '');
+    const viewType = isForcedDownload ? "📥 Direct Download Link" : "▶️ View in Browser";
+    const previewURL = isForcedDownload ? (hd || sd) : (hd || sd);
+
+    // ✅ Step 5: Send video with info
     api.sendMessage({
-      body: `《TITLE》: ${title || "No Title Found"}\n📥 Quality: ${qualityUsed}`,
+      body: `《TITLE》: ${title || "No Title Found"}\n📥 Quality: ${qualityUsed}\n${viewType}: ${previewURL}`,
       attachment: fs.createReadStream(filePath)
     }, event.threadID, () => {
       fs.unlink(filePath, () => {});
