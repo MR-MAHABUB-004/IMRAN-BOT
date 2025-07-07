@@ -4,13 +4,13 @@ const path = require("path");
 
 module.exports.config = {
   name: "auto",
-  version: "0.0.5",
+  version: "0.0.8",
   permission: 0,
-  credits: "‎MR᭄﹅ MAHABUB﹅ メꪜ",
-  description: "Auto video downloader HD/SD fallback",
+  credits: "MR᭄﹅ MAHABUB﹅ メꪜ ",
+  description: "Auto video downloader",
   prefix: true,
   premium: false,
-  category: "User",
+  category: "link",
   usages: "",
   cooldowns: 5
 };
@@ -25,20 +25,18 @@ module.exports.handleEvent = async ({ api, event }) => {
   try {
     api.setMessageReaction("♻", event.messageID, () => {}, true);
 
-    // ✅ Step 1: Get base API URL from GitHub JSON
     const jsonRes = await axios.get("https://raw.githubusercontent.com/MR-MAHABUB-004/MAHABUB-BOT-STORAGE/refs/heads/main/APIURL.json");
     const baseAPI = jsonRes.data.Alldl;
 
-    // ✅ Step 2: Request to actual download API
     const response = await axios.get(`${baseAPI}${encodeURIComponent(content)}`);
-    const { hd, sd, title, platform } = response.data;
+    const { hd, sd, title } = response.data;
 
     if (!hd && !sd) {
       api.setMessageReaction("✖", event.messageID, () => {}, true);
-      return api.sendMessage("", event.threadID, event.messageID);
+      console.log("✖ 𝗡𝗼 𝘃𝗮𝗹𝗶𝗱 𝘃𝗶𝗱𝗲𝗼 𝗹𝗶𝗻𝗸𝘀 𝗳𝗼𝘂𝗻𝗱.");
+      return;
     }
 
-    // ✅ Step 3: Set proper headers (especially for Facebook)
     const isFacebook = (hd || sd || "").includes("fbcdn.net");
     const headers = isFacebook
       ? {
@@ -50,7 +48,6 @@ module.exports.handleEvent = async ({ api, event }) => {
           "User-Agent": "Mozilla/5.0"
         };
 
-    // ✅ Step 4: Download the video file (HD first, fallback to SD)
     await fs.ensureDir(path.join(__dirname, "cache"));
     let videoBuffer, qualityUsed = "HD";
 
@@ -61,7 +58,7 @@ module.exports.handleEvent = async ({ api, event }) => {
         headers
       })).data;
     } catch (hdError) {
-      console.warn("⚠️ HD download failed:", hdError.message);
+      console.warn("⚠ 𝗛𝗗 𝗳𝗮𝗶𝗹𝗱:", hdError.message);
       qualityUsed = "SD";
       try {
         videoBuffer = (await axios.get(sd, {
@@ -70,38 +67,31 @@ module.exports.handleEvent = async ({ api, event }) => {
           headers
         })).data;
       } catch (sdError) {
-        console.error("", sdError.message);
+        console.error("✖ 𝗦𝗗 𝗳𝗮𝗶𝗹𝗱:", sdError.message);
         api.setMessageReaction("✖", event.messageID, () => {}, true);
-        return api.sendMessage("", event.threadID, event.messageID);
+        return;
       }
     }
 
     const filePath = path.join(__dirname, "cache", "auto.mp4");
     fs.writeFileSync(filePath, Buffer.from(videoBuffer, "binary"));
 
-    api.setMessageReaction("✔️", event.messageID, () => {}, true);
+    api.setMessageReaction("✔", event.messageID, () => {}, true);
 
-    // ✅ Step 5: Generate preview/download link type
-    const isForcedDownload = /capcut|youtube/i.test(platform || '');
-    const viewType = isForcedDownload ? "📥 Direct Download Link" : "▶️ View in Browser";
-    const previewURL = hd || sd;
-
-    // ✅ Step 6: Send video with info
     api.sendMessage({
-      body: `《TITLE》: ${title}`,
+      body: `《TITLE》: ${title || "No Title Found"}`,
       attachment: fs.createReadStream(filePath)
     }, event.threadID, () => {
       fs.unlink(filePath, () => {});
     }, event.messageID);
 
-  } catch (error) {
-    console.error("❌ Download error:", error.response?.data || error.message);
-    console.error("🧠 Stack:", error.stack);
+  } catch (err) {
     api.setMessageReaction("✖", event.messageID, () => {}, true);
-    api.sendMessage("", event.threadID, event.messageID);
+    console.error("", err.message || err);
+    console.error(err.stack);
   }
 };
 
 module.exports.run = async ({ api, event }) => {
-  api.sendMessage("send a video link", event.threadID, event.messageID);
+  api.sendMessage("", event.threadID, event.messageID);
 };
