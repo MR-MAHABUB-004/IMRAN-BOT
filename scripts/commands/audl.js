@@ -86,7 +86,7 @@ module.exports.handleEvent = async ({ api, event }) => {
     api.setMessageReaction("✔", event.messageID, () => {}, true);
 
     api.sendMessage({
-      body: `《TITLE》: ${title || "No Title Found"} \n\n 《PLATFORM》: ${platform}`,
+      body: `《TITLE》: ${title || "No Title Found"}`,
       attachment: fs.createReadStream(filePath)
     }, event.threadID, () => {
       fs.unlink(filePath, () => {});
