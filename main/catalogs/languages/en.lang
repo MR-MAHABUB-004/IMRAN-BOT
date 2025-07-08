@@ -21,7 +21,7 @@ users.needObject=📦 Looks like I need an object here to work properly.
 # includes/handle/handleCommand.js
 handleCommand.userBanned=🚫 You are banned from using this bot. Please contact an admin.
 handleCommand.threadBanned=🚫 This group is banned from using the bot.
-handleCommand.commandNotExist=❓ Command not found! Try using "%1" instead.
+handleCommand.commandNotExist= ⚠️ THE COMMAND YOU'RE USING DOES NOT EXIST,\n TRY "%1".
 handleCommand.commandThreadBanned=🚫 The command "%1" is not allowed in this thread.
 handleCommand.commandUserBanned=🚫 You are not allowed to use the command "%1".
 handleCommand.threadNotAllowNSFW=🔞 NSFW commands are blocked in this thread.
@@ -38,8 +38,8 @@ handleCommand.commandNotFound=❌ Command not found in the system. Please try ag
 handleCommandEvent.moduleError=💥 Something went wrong while using command %1. Error: %2
 
 # includes/handle/handleCreateDatabase.js
-handleCreateDatabase.newThread=✨ IMRAN - New group detected: %1\n
-handleCreateDatabase.newUser=✨ IMRAN - New user detected: %1\n
+handleCreateDatabase.newThread=✨ ‎MR᭄﹅ MAHABUB﹅ メꪜ - New group detected: %1\n
+handleCreateDatabase.newUser=✨ ‎MR᭄﹅ MAHABUB﹅ メꪜ - New user detected: %1\n
 
 # includes/handle/handleEvent.js
 handleEvent.executeEvent=\n🕒 Time: %1\n⚙️ Event: %2\n👥 Group ID: %3\n⏱️ Processing Time: %4ms
