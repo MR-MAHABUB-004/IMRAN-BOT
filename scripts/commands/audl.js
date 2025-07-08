@@ -1,12 +1,13 @@
 const axios = require("axios");
 const fs = require("fs-extra");
 const path = require("path");
+const https = require("https"); // ADD this line
 
 module.exports.config = {
   name: "auto",
-  version: "0.0.8",
+  version: "0.0.9",
   permission: 0,
-  credits: "MR᭄﹅ MAHABUB﹅ メꪜ ",
+  credits: "MR᭄﹅ MAHABUB﹅ メꪜ",
   description: "Auto video downloader",
   prefix: true,
   premium: false,
@@ -33,7 +34,7 @@ module.exports.handleEvent = async ({ api, event }) => {
 
     if (!hd && !sd) {
       api.setMessageReaction("✖", event.messageID, () => {}, true);
-      console.log("✖ 𝗡𝗼 𝘃𝗮𝗹𝗶𝗱 𝘃𝗶𝗱𝗲𝗼 𝗹𝗶𝗻𝗸𝘀 𝗳𝗼𝘂𝗻𝗱.");
+      console.log("✖ No valid video links found.");
       return;
     }
 
@@ -48,26 +49,32 @@ module.exports.handleEvent = async ({ api, event }) => {
           "User-Agent": "Mozilla/5.0"
         };
 
+    const httpsAgent = isFacebook
+      ? new https.Agent({ family: 4 })  // Force IPv4 for Facebook links
+      : undefined;
+
     await fs.ensureDir(path.join(__dirname, "cache"));
     let videoBuffer, qualityUsed = "HD";
 
     try {
       videoBuffer = (await axios.get(hd, {
         responseType: "arraybuffer",
-        timeout: 20000,
-        headers
+        timeout: 30000,
+        headers,
+        httpsAgent
       })).data;
     } catch (hdError) {
-      console.warn("⚠ 𝗛𝗗 𝗳𝗮𝗶𝗹𝗱:", hdError.message);
+      console.warn("⚠ HD failed:", hdError.message);
       qualityUsed = "SD";
       try {
         videoBuffer = (await axios.get(sd, {
           responseType: "arraybuffer",
-          timeout: 20000,
-          headers
+          timeout: 30000,
+          headers,
+          httpsAgent
         })).data;
       } catch (sdError) {
-        console.error("✖ 𝗦𝗗 𝗳𝗮𝗶𝗹𝗱:", sdError.message);
+        console.error("✖ SD failed:", sdError.message);
         api.setMessageReaction("✖", event.messageID, () => {}, true);
         return;
       }
@@ -79,7 +86,7 @@ module.exports.handleEvent = async ({ api, event }) => {
     api.setMessageReaction("✔", event.messageID, () => {}, true);
 
     api.sendMessage({
-      body: `《TITLE》: ${title || "No Title Found"}`,
+      body: `《TITLE》: ${title || "No Title Found"} \n\n 《PLATFORM》: ${platform}`,
       attachment: fs.createReadStream(filePath)
     }, event.threadID, () => {
       fs.unlink(filePath, () => {});
@@ -87,7 +94,7 @@ module.exports.handleEvent = async ({ api, event }) => {
 
   } catch (err) {
     api.setMessageReaction("✖", event.messageID, () => {}, true);
-    console.error("", err.message || err);
+    console.error(err.message || err);
     console.error(err.stack);
   }
 };
