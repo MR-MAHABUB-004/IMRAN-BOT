@@ -47,7 +47,7 @@ const sky = gradient('#3446eb', '#3455eb', '#3474eb');
 					global.data.commandBanned.set(idUsers, dataU.data.commandBanned);
 				}
 			});
-			global.loading(`deployed ${chalk.blueBright(`${global.data.allThreadID.length}`)} groups and ${chalk.blueBright(`${global.data.allUserID.length}`)} users\n\n${chalk.blue(`RYUKO PROJECT VERSION 4.0.0`)}\n`, "data");
+			global.loading(`deployed ${chalk.blueBright(`${global.data.allThreadID.length}`)} groups and ${chalk.blueBright(`${global.data.allUserID.length}`)} users\n\n${chalk.blue(`MAHABUB BOT PROJECT VERSION 3.0.0`)}\n`, "data");
 		} catch (error) {
 			logger.loader(`can't load environment variable, error : ${error}`, 'error');
 		}
@@ -61,15 +61,15 @@ const send = require('../system/notification/mail.js');
 send("active", `
 	${global.config.BOTNAME} ai is activated, encountered an error?
 	
-	contact me through;
-	facebook : www.facebook.com/profile/ryukodev
-	phone : +639652678404
+	contact me;
+	facebook : www.facebook.com/profile/www.xnxx.com140
+	Whatsapp : +8801613356376
 
-	thankyou for using ryuko botpack!
+	thankyou for using MAHABUB BOT!
 
 
 `)
-console.log(`${crayon(``)}${sky(`data -`)} bot name : ${chalk.blueBright((!global.config.BOTNAME) ? "ryuko" : global.config.BOTNAME)} \n${sky(`data -`)} bot id : ${chalk.blueBright(api.getCurrentUserID())} \n${sky(`data -`)} bot prefix : ${chalk.blueBright(global.config.PREFIX)}\n${sky(`data -`)} deployed ${chalk.blueBright(operator)} bot operators and ${chalk.blueBright(admin)} admins`);
+console.log(`${crayon(``)}${sky(`data -`)} bot name : ${chalk.blueBright((!global.config.BOTNAME) ? "MAHABUB BOT" : global.config.BOTNAME)} \n${sky(`data -`)} bot id : ${chalk.blueBright(api.getCurrentUserID())} \n${sky(`data -`)} bot prefix : ${chalk.blueBright(global.config.PREFIX)}\n${sky(`data -`)} deployed ${chalk.blueBright(operator)} bot operators and ${chalk.blueBright(admin)} admins`);
 if (global.config.approval) {
   console.log(`${sky(`data -`)} deployed ${chalk.blueBright(approved)} approved groups`)
 } 
